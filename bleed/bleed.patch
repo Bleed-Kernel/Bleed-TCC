@@ -1,0 +1,28 @@
+diff --git a/libtcc.c b/libtcc.c
+index 44ea25fa..fa92077f 100644
+--- a/libtcc.c
++++ b/libtcc.c
+@@ -885,6 +885,9 @@ LIBTCCAPI TCCState *tcc_new(void)
+     s->warn_discarded_qualifiers = 1;
+     s->ms_extensions = 1;
+     s->unwind_tables = 1;
++#ifdef CONFIG_TCC_STATIC_DEFAULT
++    s->static_link = 1; /* nothing to load shared libraries at run time */
++#endif
+ 
+ #ifdef CHAR_IS_UNSIGNED
+     s->char_is_unsigned = 1;
+diff --git a/tcc.h b/tcc.h
+index 864a4e32..73793228 100644
+--- a/tcc.h
++++ b/tcc.h
+@@ -186,7 +186,8 @@ extern long double strtold (const char *__nptr, char **__endptr);
+ #endif
+ 
+ /* only native compiler supports -run */
+-#if defined _WIN32 == defined TCC_TARGET_PE \
++#if !defined CONFIG_TCC_NO_RUN \
++    && defined _WIN32 == defined TCC_TARGET_PE \
+     && defined __APPLE__ == defined TCC_TARGET_MACHO
+ # if defined __i386__ && defined TCC_TARGET_I386
+ #  define TCC_IS_NATIVE
