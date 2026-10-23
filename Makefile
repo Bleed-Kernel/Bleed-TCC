@@ -44,7 +44,7 @@ all: bin/tcc stage
 source: $(TCC_SRC)/.patched
 
 $(TCC_SRC)/.patched: bleed/bleed.patch
-	@if [ ! -d $(TCC_SRC) ]; then git clone $(TCC_REPO) $(TCC_SRC); fi
+	@if [ ! -d $(TCC_SRC) ]; then rm -rf $(TCC_SRC).tmp && git clone $(TCC_REPO) $(TCC_SRC).tmp && mv $(TCC_SRC).tmp $(TCC_SRC); fi
 	cd $(TCC_SRC) && git checkout -q -f $(TCC_COMMIT) && git apply ../../bleed/bleed.patch
 	@touch $@
 
