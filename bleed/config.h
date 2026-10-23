@@ -16,4 +16,3 @@
 #define CONFIG_TCC_SYSINCLUDEPATHS  "{B}/include:" CONFIG_BLEED_ROOT "/include"
 #define CONFIG_TCC_LIBPATHS         "{B}:" CONFIG_BLEED_ROOT "/lib"
 #define CONFIG_TCC_CRTPREFIX        CONFIG_BLEED_ROOT "/lib"
-#define CONFIG_TCC_NO_RUN         1     // -run needs memory it can execute, bleed maps it all no-execute right now

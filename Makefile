@@ -80,6 +80,7 @@ stage: $(HOST_TCC) | blibc
 		../../$(HOST_TCC) -c $$src -I../../$(TCC_SRC) -o $$o || exit 1; \
 	done
 	$(HOST_TCC) -ar rcs $(STAGE)/lib/tcc/libtcc1.a $(addprefix $(BUILD)/lib/,$(LIBTCC1_O))
+	$(HOST_TCC) -c $(TCC_SRC)/lib/runmain.c -o $(STAGE)/lib/tcc/runmain.o
 
 initrd: stage
 	@test -n "$(INITRD)" || { echo "make initrd INITRD=<the kernels initrd folder>"; exit 1; }
