@@ -37,7 +37,7 @@ LDFLAGS = \
 	-no-pie \
 	-m64
 
-.PHONY: all source blibc stage initrd install host-test clean distclean
+.PHONY: all source blibc stage initrd install clean distclean
 
 all: bin/tcc stage
 
@@ -80,15 +80,6 @@ stage: $(HOST_TCC) | blibc
 		../../$(HOST_TCC) -c $$src -I../../$(TCC_SRC) -o $$o || exit 1; \
 	done
 	$(HOST_TCC) -ar rcs $(STAGE)/lib/tcc/libtcc1.a $(addprefix $(BUILD)/lib/,$(LIBTCC1_O))
-	@mkdir -p $(STAGE)/src
-	cp examples/*.c $(STAGE)/src/
-
-host-test: stage
-	@mkdir -p $(BUILD)/tests
-	for t in examples/*.c; do \
-		$(HOST_TCC) $$t -o $(BUILD)/tests/$$(basename $$t .c) || exit 1; \
-	done
-	@ls -l $(BUILD)/tests
 
 initrd: stage
 	@test -n "$(INITRD)" || { echo "make initrd INITRD=<the kernels initrd folder>"; exit 1; }

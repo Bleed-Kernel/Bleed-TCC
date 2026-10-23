@@ -1,0 +1,7 @@
+bin/
+build/
+stage/
+external/
+*.o
+*.a
+.DS_Store
